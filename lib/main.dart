@@ -1,55 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/controllers/counter_controller.dart';
+import 'package:getx/controllers/orang_controller.dart';
 
 void main(List<String> args) {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final controllerC = Get.put(CounterController());
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => MaterialApp(
-        theme: controllerC.isDark.value ? ThemeData.dark() : ThemeData.light(),
-        home: HomePage()));
+    return MaterialApp(
+      home: HomePage(),
+    );
   }
 }
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  final c = Get.find<CounterController>();
+  final orangC = Get.put(OrangController());
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Belajar GetX"),
-      ),
-      body: Center(
-        child: Obx(
-          () => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Angka ${c.counter}",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                  onPressed: () => c.increment(), child: Icon(Icons.add))
-            ],
+    return Obx(
+      () => Scaffold(
+          appBar: AppBar(
+            title: Text("Belajar State Management GetX"),
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => c.changeTheme(),
-        child:
-            Icon(c.isDark.value ? Icons.flashlight_on : Icons.flashlight_off),
-      ),
+          body: Center(
+            child: Text(
+              "Haloo nama aku ${orangC.orang.nama.value}",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              if (orangC.isUpper.value) {
+                orangC.changeToLoweCase();
+              } else {
+                orangC.chageToUpperCase();
+              }
+            },
+            child: Icon(orangC.isUpper.value
+                ? Icons.text_decrease
+                : Icons.text_increase),
+          )),
     );
   }
 }
