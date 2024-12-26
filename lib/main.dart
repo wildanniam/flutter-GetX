@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx/controllers/orang_controller.dart';
 
-void main(List<String> args) {
-  runApp(MyApp());
+void main() {
+  // Inisialisasi controller sekali
+  Get.put(OrangController());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -18,34 +20,40 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
-  final orangC = Get.put(OrangController());
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-          appBar: AppBar(
-            title: Text("Belajar State Management GetX"),
-          ),
-          body: Center(
-            child: Text(
-              "Haloo nama aku ${orangC.orang.nama.value}",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Belajar State Management GetX"),
+      ),
+      body: Center(
+        child: GetX<OrangController>(
+          builder: (controller) {
+            return Text(
+              "Haloo nama aku ${controller.orang.nama.value}",
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            );
+          },
+        ),
+      ),
+      floatingActionButton: GetX<OrangController>(
+        builder: (controller) {
+          return FloatingActionButton(
             onPressed: () {
-              if (orangC.isUpper.value) {
-                orangC.changeToLoweCase();
-              } else {
-                orangC.chageToUpperCase();
-              }
+              controller.isUpper.value
+                  ? controller.changeToLoweCase()
+                  : controller.chageToUpperCase();
             },
-            child: Icon(orangC.isUpper.value
-                ? Icons.text_decrease
-                : Icons.text_increase),
-          )),
+            child: Icon(
+              controller.isUpper.value
+                  ? Icons.text_decrease
+                  : Icons.text_increase,
+            ),
+          );
+        },
+      ),
     );
   }
 }
