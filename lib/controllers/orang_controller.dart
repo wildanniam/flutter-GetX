@@ -2,16 +2,19 @@ import 'package:get/state_manager.dart';
 import 'package:getx/models/orang.dart';
 
 class OrangController extends GetxController {
-  var orang = Orang();
-  var isUpper = false.obs;
+  //Karena kita pake getx metode simple (bukan reactive) disini gaada obs nya
+  var orang = Orang(nama: "jAwir", umur: 20);
+  var isUpper = false;
 
   void chageToUpperCase() {
-    orang.nama.value = orang.nama.value.toUpperCase();
-    isUpper.value = true;
+    orang.nama = orang.nama.toUpperCase();
+    isUpper = true;
+    update(); //Pengganti obs di simple adalah kita menaruh func update()
   }
 
   void changeToLoweCase() {
-    orang.nama.value = orang.nama.toLowerCase();
-    isUpper.value = false;
+    orang.nama = orang.nama.toLowerCase();
+    isUpper = false;
+    update(); //Pengganti obs di simple adalah kita menaruh func update()
   }
 }

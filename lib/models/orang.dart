@@ -1,6 +1,6 @@
-import 'package:get/state_manager.dart';
-
 class Orang {
-  var nama = "Agus".obs;
-  var umur = 20.obs;
+  String nama;
+  int umur;
+
+  Orang({required this.nama, required this.umur});
 }

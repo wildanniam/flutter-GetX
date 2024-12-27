@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:getx/controllers/orang_controller.dart';
 
 void main() {
-  // Inisialisasi controller sekali
   Get.put(OrangController());
   runApp(const MyApp());
 }
@@ -29,27 +28,26 @@ class HomePage extends StatelessWidget {
         title: const Text("Belajar State Management GetX"),
       ),
       body: Center(
-        child: GetX<OrangController>(
+        //Disini GetBuilder sama sama getxbuilder isinya sama sih, jadi ga perlu pusing
+        child: GetBuilder<OrangController>(
           builder: (controller) {
             return Text(
-              "Haloo nama aku ${controller.orang.nama.value}",
+              "Haloo nama aku ${controller.orang.nama}",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             );
           },
         ),
       ),
-      floatingActionButton: GetX<OrangController>(
+      floatingActionButton: GetBuilder<OrangController>(
         builder: (controller) {
           return FloatingActionButton(
             onPressed: () {
-              controller.isUpper.value
+              controller.isUpper
                   ? controller.changeToLoweCase()
                   : controller.chageToUpperCase();
             },
             child: Icon(
-              controller.isUpper.value
-                  ? Icons.text_decrease
-                  : Icons.text_increase,
+              controller.isUpper ? Icons.text_decrease : Icons.text_increase,
             ),
           );
         },
